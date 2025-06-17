@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TalentKonnect Modules</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@600&family=Lora&family=Montserrat:wght@700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary-blue: #1D3557;
+      --accent-orange: #E76F51;
+      --neutral-light: #F1FAEE;
+      --neutral-dark: #2A2D34;
+      --shadow: 2px 2px rgba(0, 0, 0, 0.05);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Lora', serif;
+      background: var(--neutral-light);
+      color: var(--neutral-dark);
+      padding: 2rem;
+    }
+
+    h1, h2 {
+      font-family: 'Montserrat', sans-serif;
+      text-transform: uppercase;
+      color: var(--primary-blue);
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+
+    h2 {
+      font-size: 1.5rem;
+      margin: 1.5rem 0 0.5rem;
+    }
+
+    .module, .banner, .summary {
+      background: white;
+      border-radius: 12px;
+      box-shadow: var(--shadow);
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      transition: transform 0.3s ease-out;
+    }
+
+    .module:hover {
+      transform: scale(1.01);
+    }
+
+    button {
+      font-family: 'Inter', sans-serif;
+      border: none;
+      border-radius: 8px;
+      padding: 0.6rem 1.2rem;
+      cursor: pointer;
+      margin-top: 1rem;
+      transition: background 0.3s ease;
+    }
+
+    .primary {
+      background: var(--accent-orange);
+      color: white;
+    }
+
+    .primary:hover {
+      background: #d85b3e;
+    }
+
+    .secondary {
+      background: transparent;
+      border: 2px solid var(--primary-blue);
+      color: var(--primary-blue);
+    }
+
+    .secondary:hover {
+      background: var(--primary-blue);
+      color: white;
+    }
+
+    .tooltip {
+      background: var(--primary-blue);
+      color: white;
+      padding: 0.5rem;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      margin-top: 0.5rem;
+    }
+
+    .banner {
+      background: var(--accent-orange);
+      color: white;
+      font-family: 'Inter', sans-serif;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .banner button {
+      background: white;
+      color: var(--accent-orange);
+      font-weight: bold;
+    }
+
+    .sparkle {
+      color: var(--accent-orange);
+      font-size: 1.3rem;
+      margin-left: 0.5rem;
+    }
+
+    .confirmation {
+      margin-top: 1rem;
+      background: #e6ffed;
+      border: 1px solid #4caf50;
+      padding: 0.75rem;
+      border-radius: 8px;
+      color: #2e7d32;
+    }
+  </style>
+</head>
+<body>
+  <h1>TalentKonnect Modules</h1>
+
+  <!-- Notification Banner -->
+  <div class="banner" id="notifyBanner">
+    <span>🎉 New draw happening soon. Earn more credits now!</span>
+    <button onclick="dismissBanner()">Dismiss</button>
+  </div>
+
+  <!-- Module 7: Credit-to-Token Conversion -->
+  <div class="module">
+    <h2>Credit-to-Token Conversion</h2>
+    <div class="summary">
+      <p>You have <strong id="tokenCount">120</strong> TokenCredits available <span class="sparkle">✨</span></p>
+      <div class="tooltip">20% of your credits are auto-converted after 2 non-winning draws</div>
+    </div>
+    <button class="primary" onclick="convertCredits()">Convert Credits</button>
+    <div class="confirmation" id="confirmBox" style="display:none;">✅ Credits converted! Token balance updated.</div>
+  </div>
+
+  <!-- Module 8: Notifications -->
+  <div class="module">
+    <h2>Notifications & Reminders</h2>
+    <p>Manage how you receive credit alerts and draw updates.</p>
+    <button class="secondary" onclick="subscribe()">Subscribe</button>
+    <button class="secondary" onclick="unsubscribe()">Unsubscribe</button>
+    <div class="confirmation" id="logMsg" style="display:none;"></div>
+  </div>
+
+  <script>
+    function dismissBanner() {
+      document.getElementById("notifyBanner").style.display = "none";
+    }
+
+    function convertCredits() {
+      document.getElementById("confirmBox").style.display = "block";
+      console.log("POST /api/credits/convert triggered");
+      setTimeout(() => {
+        document.getElementById("tokenCount").innerText = 140;
+      }, 1000);
+    }
+
+    function subscribe() {
+      document.getElementById("logMsg").style.display = "block";
+      document.getElementById("logMsg").innerText = "✅ Subscribed to credit notifications.";
+      console.log("User subscribed to notifications");
+    }
+
+    function unsubscribe() {
+      document.getElementById("logMsg").style.display = "block";
+      document.getElementById("logMsg").innerText = "⚠️ Notifications blocked. Logged via API.";
+      console.log("User blocked notifications. Logging this via API.");
+    }
+  </script>
+</body>
+</html>
